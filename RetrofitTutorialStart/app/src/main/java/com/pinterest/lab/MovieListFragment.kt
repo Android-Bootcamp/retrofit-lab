@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pinterest.lab.databinding.FragmentMovieListBinding
 import com.pinterest.lab.ui.MovieListAdapter
+import io.reactivex.disposables.Disposable
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
@@ -16,16 +17,17 @@ class MovieListFragment : Fragment() {
 
     private var _binding: FragmentMovieListBinding? = null
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
+    // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
     private lateinit var adapter: MovieListAdapter
+    private var callDisposable: Disposable? = null
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentMovieListBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -50,5 +52,6 @@ class MovieListFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        callDisposable?.dispose()
     }
 }

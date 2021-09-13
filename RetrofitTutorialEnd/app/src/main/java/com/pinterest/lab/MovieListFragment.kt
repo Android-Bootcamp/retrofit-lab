@@ -25,8 +25,7 @@ class MovieListFragment : Fragment() {
 
     private var _binding: FragmentMovieListBinding? = null
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
+    // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
     private lateinit var adapter: MovieListAdapter
     private var callDisposable: Disposable? = null
