@@ -8,6 +8,8 @@ import android.view.View
 import android.widget.ImageView
 import com.pinterest.lab.R
 import com.pinterest.lab.model.Result
+import com.pinterest.lab.util.getImageUrl
+import com.squareup.picasso.Picasso
 
 class MovieListAdapter internal constructor(private val mData: MutableList<Result>) :
     RecyclerView.Adapter<MovieListAdapter.ViewHolder>() {
@@ -29,7 +31,12 @@ class MovieListAdapter internal constructor(private val mData: MutableList<Resul
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val program = mData[position]
-        
+        Picasso.get().load(getImageUrl(program.posterPath)).into(holder.vMovie)
+        holder.tvTitle.text = program.title
+        holder.TtvReleaseDate.text = program.releaseDate
+        holder.tvVote.text = program.voteAverage.toString()
+        holder.tvOverview.text = program.overview
+
     }
 
     override fun getItemCount(): Int {

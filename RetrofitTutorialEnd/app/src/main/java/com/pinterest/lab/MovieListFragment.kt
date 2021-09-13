@@ -36,7 +36,7 @@ class MovieListFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentMovieListBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -57,13 +57,13 @@ class MovieListFragment : Fragment() {
     private fun makeRequest() {
         callDisposable = getRetrofit()
             .create(MovieApiService::class.java)
-            .getTopRatedMovies(getApiKey())
+            .getTopRatedMovies(getApiKey(), 1) // We can optionally paginate the list with this second parameter
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                it.results?.let{
-                    adapter.setData(it)
-                    adapter.notifyDataSetChanged()
+                it.results?.let{ results ->
+                    adapter.setData(results)
+                    adapter.notifyDataSetChanged() // BAD but it works for a simple change.
                 }
             }, {
                 Log.e(FirstFragment::class.java.canonicalName, it.stackTraceToString())
